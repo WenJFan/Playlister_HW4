@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import SongCard from './SongCard.js'
 import MUIEditSongModal from './MUIEditSongModal'
 import MUIRemoveSongModal from './MUIRemoveSongModal'
+import MUIDeleteModal from './MUIDeleteModal'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
@@ -23,6 +24,9 @@ function WorkspaceScreen() {
     else if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
+    /*else if (store.isDeleteListModalOpen()){
+        modalJSX = <MUIDeleteModal />;
+    }*/
     return (
         <Box>
         <List 
