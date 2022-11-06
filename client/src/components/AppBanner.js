@@ -4,7 +4,7 @@ import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 
 import EditToolbar from './EditToolbar'
-
+import HomeScreen from './HomeScreen';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -52,7 +52,6 @@ export default function AppBanner() {
         >
             <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
             <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
-            
         </Menu>
     );
     const loggedInMenu = 
@@ -75,11 +74,13 @@ export default function AppBanner() {
         </Menu>        
 
     let editToolbar = "";
+    let home = "";
     let menu = loggedOutMenu;
     if (auth.loggedIn) {
         menu = loggedInMenu;
         if (store.currentList) {
             editToolbar = <EditToolbar />;
+            home = <HomeScreen/>
         }
     }
     

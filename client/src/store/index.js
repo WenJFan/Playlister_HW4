@@ -317,10 +317,16 @@ function GlobalStoreContextProvider(props) {
         }
         getListToDelete(id);
     }
+    store.unmarkListForDeletion = function(){
+        storeReducer({
+            type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
+            payload: {id: null, playlist: null}
+        });
+    }
     store.deleteList = function (id) {
         async function processDelete(id) {
             let response = await api.deletePlaylistById(id);
-            if (response.data.success) {
+            if (response.status === 200) {
                 store.loadIdNamePairs();
                 history.push("/");
             }
@@ -519,7 +525,6 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
-
     return (
         <GlobalStoreContext.Provider value={{
             store
