@@ -44,6 +44,7 @@ const HomeScreen = () => {
                 color="primary" 
                 aria-label="add"
                 id="add-list-button"
+                disabled = {store.listNameActive||store.isDeleteListModalOpen()}
                 onClick={handleCreateNewList}
             >
                 <AddIcon />

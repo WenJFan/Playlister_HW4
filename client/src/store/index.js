@@ -28,9 +28,11 @@ export const GlobalStoreActionType = {
     MARK_LIST_FOR_DELETION: "MARK_LIST_FOR_DELETION",
     SET_CURRENT_LIST: "SET_CURRENT_LIST",
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
+    SET_LIST_NAME_EDIT_INACTIVE: "SET_LIST_NAME_EDIT_INACTIVE",
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
-    HIDE_MODALS: "HIDE_MODALS"
+    HIDE_MODALS: "HIDE_MODALS",
+    UNMARK_LIST_FOR_DELETION:"UNMARK_LIST_FOR_DELETION"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -169,6 +171,19 @@ function GlobalStoreContextProvider(props) {
                     listMarkedForDeletion: null
                 });
             }
+            case GlobalStoreActionType.SET_LIST_NAME_EDIT_INACTIVE: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: payload,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null
+                });
+            }
             // 
             case GlobalStoreActionType.EDIT_SONG: {
                 return setStore({
@@ -201,6 +216,19 @@ function GlobalStoreContextProvider(props) {
                     currentModal : CurrentModal.NONE,
                     idNamePairs: store.idNamePairs,
                     currentList: store.currentList,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null
+                });
+            }
+            case GlobalStoreActionType.UNMARK_LIST_FOR_DELETION:{
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: null,
                     currentSongIndex: -1,
                     currentSong: null,
                     newListCounter: store.newListCounter,
@@ -320,8 +348,8 @@ function GlobalStoreContextProvider(props) {
     }
     store.unmarkListForDeletion = function(){
         storeReducer({
-            type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
-            payload: {id: null, playlist: null}
+            type: GlobalStoreActionType.UNMARK_LIST_FOR_DELETION,
+            payload: {}
         });
     }
     store.deleteList = function (id) {
@@ -507,22 +535,28 @@ function GlobalStoreContextProvider(props) {
         tps.doTransaction();
     }
     store.canAddNewSong = function() {
-        return (store.currentList !== null);
+        return (store.currentList !== null&&!store.isEditSongModalOpen()&&!store.isRemoveSongModalOpen());
     }
     store.canUndo = function() {
-        return ((store.currentList !== null) && tps.hasTransactionToUndo());
+        return ((store.currentList !== null) && tps.hasTransactionToUndo()&&!store.isEditSongModalOpen()&&!store.isRemoveSongModalOpen());
     }
     store.canRedo = function() {
-        return ((store.currentList !== null) && tps.hasTransactionToRedo());
+        return ((store.currentList !== null) && tps.hasTransactionToRedo()&&!store.isEditSongModalOpen()&&!store.isRemoveSongModalOpen());
     }
     store.canClose = function() {
-        return (store.currentList !== null);
+        return (store.currentList !== null&&!store.isEditSongModalOpen()&&!store.isRemoveSongModalOpen());
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
     store.setIsListNameEditActive = function () {
         storeReducer({
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
+            payload: null
+        });
+    }
+    store.setIsListNameEditInActive = function () {
+        storeReducer({
+            type: GlobalStoreActionType.SET_LIST_NAME_EDIT_INACTIVE,
             payload: null
         });
     }

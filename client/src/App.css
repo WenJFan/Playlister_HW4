@@ -61,7 +61,7 @@ body {
   border-width: 2px;
   border-style: solid;
   border-radius: 10px;
-  padding-left: 10%;
+  padding-left: 0%;
   padding-top: 5%;
   padding-bottom: 5%;
   height:70%;
@@ -175,6 +175,19 @@ body {
   cursor: pointer;
   background-color: var(--swatch-contrast);
   color: white;
+}
+
+#playlister-statusbar {
+  position :fixed ;
+  left: 10%;
+  top: 90%;
+  width: 80%;
+  height: 10%;
+  background-color: linen;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36pt;
 }
 
 .selected-list-card {

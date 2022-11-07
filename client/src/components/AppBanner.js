@@ -29,6 +29,9 @@ export default function AppBanner() {
     };
 
     const handleLogout = () => {
+        if(store.currentList!==null){
+            store.closeCurrentList();
+        }
         handleMenuClose();
         auth.logoutUser();
     }
@@ -114,6 +117,7 @@ export default function AppBanner() {
                             aria-controls={menuId}
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
+                            disabled = {store.isEditSongModalOpen()||store.isRemoveSongModalOpen()||store.isDeleteListModalOpen()||store.listNameActive}
                             color="inherit"
                         >
                             { getAccountMenu(auth.loggedIn) }

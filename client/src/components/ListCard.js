@@ -44,6 +44,9 @@ function ListCard(props) {
         if (newActive) {
             store.setIsListNameEditActive();
         }
+        else{
+            store.setIsListNameEditInActive();
+        }
         setEditActive(newActive);
     }
 
@@ -57,8 +60,12 @@ function ListCard(props) {
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
+            if (text==""){
+                store.changeListName(id, "Untitled");
+            }
             store.changeListName(id, text);
             toggleEdit();
+            
         }
     }
     function handleUpdateText(event) {
@@ -70,7 +77,7 @@ function ListCard(props) {
         selectClass = "selected-list-card";
     }
     let cardStatus = false;
-    if (store.isListNameEditActive) {
+    if (store.listNameActive) {
         cardStatus = true;
     }
     let cardElement =
@@ -80,18 +87,19 @@ function ListCard(props) {
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
             style={{ width: '100%', fontSize: '48pt' }}
             button
+            disabled = {store.listNameActive}
             onClick={(event) => {
                 handleLoadList(event, idNamePair._id)
             }}
         >
             <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
             <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
+                <IconButton disabled = {store.listNameActive||store.isDeleteListModalOpen()} onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{fontSize:'48pt'}} />
                 </IconButton>
             </Box>
             <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
+                <IconButton disabled = {store.listNameActive||store.isDeleteListModalOpen()} onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
                     }} aria-label='delete'>
                     <DeleteIcon style={{fontSize:'48pt'}} />

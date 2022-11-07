@@ -23,6 +23,9 @@ export default function MUIEditSongModal() {
     const [ youTubeId, setYouTubeId ] = useState(store.currentSong.youTubeId);
 
     function handleConfirmEditSong() {
+        
+        
+        
         let newSongData = {
             title: title,
             artist: artist,
@@ -37,14 +40,23 @@ export default function MUIEditSongModal() {
 
     function handleUpdateTitle(event) {
         setTitle(event.target.value);
+        if (event.target.value == ""){
+            setTitle("Untitled");
+        }
     }
 
     function handleUpdateArtist(event) {
         setArtist(event.target.value);
+        if (event.target.value == ""){
+            setArtist("Unknown");
+        }
     }
 
     function handleUpdateYouTubeId(event) {
         setYouTubeId(event.target.value);
+        if (event.target.value == ""){
+            setYouTubeId("dQw4w9WgXcQ");
+        }
     }
     /*let modalClass = "modal";
     if (store.isEditSongModalOpen()) {
