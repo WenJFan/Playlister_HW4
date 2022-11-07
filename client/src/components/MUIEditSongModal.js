@@ -46,10 +46,60 @@ export default function MUIEditSongModal() {
     function handleUpdateYouTubeId(event) {
         setYouTubeId(event.target.value);
     }
-
+    /*let modalClass = "modal";
+    if (store.isEditSongModalOpen()) {
+        modalClass += " is-visible";
+    }*/
     return (
         <Modal
-            open={store.listMarkedForDeletion !== null}
+            open={store.listMarkedForDeletion == null}
+        >
+            <Box sx={style}>
+                <div className="modal-dialog">
+                <header className="dialog-header">
+                <div id="title-prompt" className="modal-prompt">Title:</div>
+                    <input 
+                        id="edit-song-modal-title-textfield" 
+                        className='modal-textfield' 
+                        type="text" 
+                        defaultValue={title} 
+                        onChange={handleUpdateTitle} />
+                <div id="artist-prompt" className="modal-prompt">Artist:</div>
+                    <input 
+                        id="edit-song-modal-artist-textfield" 
+                        className='modal-textfield' 
+                        type="text" 
+                        defaultValue={artist} 
+                        onChange={handleUpdateArtist} />
+                <div id="you-tube-id-prompt" className="modal-prompt">You Tube Id:</div>
+                    <input 
+                        id="edit-song-modal-youTubeId-textfield" 
+                        className='modal-textfield' 
+                        type="text" 
+                        defaultValue={youTubeId} 
+                        onChange={handleUpdateYouTubeId} />
+                </header>
+                <div id="confirm-cancel-container">
+                <input 
+                        type="button" 
+                        id="edit-song-confirm-button" 
+                        className="modal-button" 
+                        value='Confirm' 
+                        onClick={handleConfirmEditSong} />
+                    <input 
+                        type="button" 
+                        id="edit-song-cancel-button" 
+                        className="modal-button" 
+                        value='Cancel' 
+                        onClick={handleCancelEditSong}  />
+                </div>
+            </div>
+            </Box>
+        </Modal>
+    );
+}
+/*<Modal
+            open={store.listMarkedForDeletion == null}
         >
             <Box sx={style}>
             <div
@@ -104,6 +154,4 @@ export default function MUIEditSongModal() {
             </div>
         </div>
             </Box>
-        </Modal>
-    );
-}
+        </Modal>*/
