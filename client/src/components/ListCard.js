@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField';
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
-    const [text, setText] = useState("");
+    const [text, setText] = useState(null);
     const { idNamePair, selected } = props;
 
     function handleLoadList(event, id) {
